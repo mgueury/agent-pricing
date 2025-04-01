@@ -360,9 +360,8 @@ You have access to the following tools:
 input_variables=["tools", "tool_names"])
 prompt_text = prompt.format(tools=tools, tool_names=tool_names)
 memory = MemorySaver()
-graph = create_react_agent(model, tools=tools, prompt=prompt_text, checkpointer=memory)
-
-# graph = create_react_agent(model, tools=tools, prompt=prompt_text, checkpointer=None)
+# graph = create_react_agent(model, tools=tools, prompt=prompt_text, checkpointer=memory)
+graph = create_react_agent(model, tools=tools, prompt=prompt_text, checkpointer=None)
 
 def print_stream(stream):
     for s in stream:
