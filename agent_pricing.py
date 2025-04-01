@@ -356,14 +356,13 @@ When printing a table do use '<br>' in the Description.
 You have access to the following tools:
 {tools}
 """,
+
 input_variables=["tools", "tool_names"])
-
 prompt_text = prompt.format(tools=tools, tool_names=tool_names)
-
 memory = MemorySaver()
-
 graph = create_react_agent(model, tools=tools, prompt=prompt_text, checkpointer=memory)
-#graph = create_react_agent(model, tools=tools, prompt=prompt_text, checkpointer=None)
+
+# graph = create_react_agent(model, tools=tools, prompt=prompt_text, checkpointer=None)
 
 def print_stream(stream):
     for s in stream:
@@ -375,12 +374,7 @@ def print_stream(stream):
             print(message)
 
 inputs = {"messages": [("user", f"I'd like to get a price to ingest a live sports stream for 4 hours. Could you please suggest a setup and provide me with the end cost? Don't ask me any questions, just make assumptions and tell me the assumptions you've made.")]}
-#print_stream(graph.stream(inputs,{"thread_id": "1"} ,stream_mode="values")) # Comment out this line to prevent printing in console during FastAPI execution
-
-class UserMessage(BaseModel):
-    message: str
-
-import re
+# print_stream(graph.stream(inputs,{"thread_id": "1"} ,stream_mode="values")) # Comment out this line to prevent printing in console during FastAPI execution
 
 def deduplicate_text(text: str) -> str:
     paragraphs = re.split(r'\n\s*\n', text)
