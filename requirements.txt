@@ -1,5 +1,5 @@
 # Dependencies
 langchain
+langchain_community
 langgraph
-langgraph_community
 streamlit
