@@ -1,5 +1,6 @@
 # Dependencies
 langchain
 langchain_community
+langchain_openai
 langgraph
 streamlit
