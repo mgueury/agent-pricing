@@ -255,7 +255,7 @@ tools = [
 model = ChatOCIGenAI(
     model_id="cohere.command-r-plus-08-2024",
     service_endpoint="https://inference.generativeai.eu-frankfurt-1.oci.oraclecloud.com",
-    model_kwargs={"temperature": 0.7, "max_tokens": 4000}
+    model_kwargs={"temperature": 0.7, "max_tokens": 4000},
     compartment_id=compartmentId,
     auth_type="INSTANCE_PRINCIPAL"
 )
