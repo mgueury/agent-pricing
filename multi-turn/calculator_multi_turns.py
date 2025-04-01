@@ -2,25 +2,28 @@ from rich.console import Console
 
 from adk import Agent, AgentClient
 from adk.tool.prebuilt import CalculatorToolkit
-
+import os
 
 console = Console(log_time=False, log_path=False)
 
 
 def main():
 
+    # Assuming the agent and agent endpoint resources were already provisioned
+    adk_demo_agent_endpoint_id = os.getenv("TF_VAR_agent_endpoint_ocid")
+
     try:
         # Initialize the agent client
         client = AgentClient(
             auth_type="security_token",
             profile="BoatOc1",
-            region="us-chicago-1"
+            region="eu-frankfurt-01"
         )
 
         # Instantiate the local agent object (with the client, instructions, and tools to be registered)
         agent = Agent(
+            agent_endpoint_id=adk_demo_agent_endpoint_id,
             client=client,
-            agent_endpoint_id="ocid1.genaiagentendpoint.oc1.us-chicago-1.amaaaaaacqy6p4qaqzqhtgbj7arnj2rzy645g7tkeyqr2eaq27x4wfq3olsa",
             instructions="You are a helpful assistant that can perform calculations.",
             tools=[CalculatorToolkit()]
         )
@@ -31,6 +34,11 @@ def main():
         # Use the agent to process the end user request (it automatically handles the function calling)
         input = "What is the square root of 475695037565?"
         response = agent.run(input, max_steps=3)
+        response.pretty_print()
+
+        # second turn
+        input = "do the same thing for 123456789"
+        response = agent.run(input, session_id=response.session_id, max_steps=3)
         response.pretty_print()
 
     except Exception as e:
