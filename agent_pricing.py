@@ -39,23 +39,9 @@ class GraphState(TypedDict):
     """
     messages: List[Tuple[str, str]]
 
-DB_CONFIG = {
-    "user": "admin",
-    "password": os.getenv("TF_VAR_db_password"),
-    "config_dir": "wallet",
-    "wallet_location": "wallet",
-    "wallet_password": os.getenv("TF_VAR_db_password"),
-    "thick_mode": "False"
-}
-
-connection = oracledb.connect(
-    config_dir=DB_CONFIG["config_dir"],
-    user=DB_CONFIG["user"],
-    password=DB_CONFIG["password"],
-    dsn=DB_CONFIG["dsn"],
-    wallet_location=DB_CONFIG["wallet_location"],
-    wallet_password=DB_CONFIG["wallet_password"]
-)
+oracledb.init_oracle_client()
+connection = oracledb.connect( user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), dsn=os.getenv('DB_URL'))
+# connection.autocommit = True
 
 embedding =  OCIGenAIEmbeddings(
     model_id="cohere.embed-english-v3.0",
@@ -381,14 +367,6 @@ def print_stream(stream):
 inputs = {"messages": [("user", f"I'd like to get a price to ingest a live sports stream for 4 hours. Could you please suggest a setup and provide me with the end cost? Don't ask me any questions, just make assumptions and tell me the assumptions you've made.")]}
 #print_stream(graph.stream(inputs,{"thread_id": "1"} ,stream_mode="values")) # Comment out this line to prevent printing in console during FastAPI execution
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 class UserMessage(BaseModel):
     message: str
 
@@ -433,7 +411,7 @@ def chat(prompt):
 
 
     # Remove echoed user input if present.
-    user_text = user_message.message.strip()
+    user_text = prompt.strip()
     trimmed_response = response.strip()
     if trimmed_response.startswith(user_text):
         response = trimmed_response[len(user_text):].lstrip()

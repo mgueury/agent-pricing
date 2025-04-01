@@ -3,10 +3,8 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 export PATH=~/.local/bin/:$PATH
 
-. ./env.sh
-# export TF_VAR_comparment_ocid=xxxxx
-# export TF_VAR_db_password=xxxxx
+. ../app/env.sh
 
-streamlit run streamlit.py --server.port 8080 2>&1 | tee tools.log
+streamlit run streamlit.py --server.port 8081 2>&1 | tee streamlit.log
 
-# Ex: curl "http://$BASTION_IP:8080/"
+# Ex: curl "http://$BASTION_IP:8081/"
