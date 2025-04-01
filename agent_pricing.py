@@ -251,12 +251,14 @@ tools = [
     )
 ]
 
-
 # model = ChatOpenAI(model="gpt-4o", api_key=OPENAI_API_KEY)
-model = ChatOCIGenAI(model_id="c",
-                       service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
-                       compartment_id=os.getenv("TF_VAR_compartment_ocid"),
-                       model_kwargs={"temperature": 0.7, "max_tokens": 4000})
+model = ChatOCIGenAI(
+    model_id="cohere.command-r-plus-08-2024",
+    service_endpoint="https://inference.generativeai.eu-frankfurt-1.oci.oraclecloud.com",
+    model_kwargs={"temperature": 0.7, "max_tokens": 4000}
+    compartment_id=compartmentId,
+    auth_type="INSTANCE_PRINCIPAL"
+)
 
 tool_names = [tool.name for tool in tools]
 
