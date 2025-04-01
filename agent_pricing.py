@@ -32,6 +32,7 @@ from diagrams.oci.compute import VM
 from diagrams.oci.database import Stream
 from diagrams import Diagram, Cluster
 from diagrams.oci import connectivity, network
+import oci
 
 class GraphState(TypedDict):
     """
@@ -43,10 +44,17 @@ oracledb.init_oracle_client()
 connection = oracledb.connect( user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), dsn=os.getenv('DB_URL'))
 # connection.autocommit = True
 
+# Signer
+signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
+config = {'region': signer.region, 'tenancy': signer.tenancy_id}
+compartmentId = os.getenv("TF_VAR_compartment_ocid")
+
 embedding =  OCIGenAIEmbeddings(
     model_id="cohere.embed-english-v3.0",
-    service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
-    compartment_id=os.getenv("TF_VAR_compartment_ocid"))
+    service_endpoint="https://inference.generativeai.eu-frankfurt-1.oci.oraclecloud.com",
+    compartment_id=compartmentId,
+    auth_type="INSTANCE_PRINCIPAL"
+)
 
 load_dotenv()
 # OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
