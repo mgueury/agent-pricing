@@ -1,5 +1,4 @@
 from rich.console import Console
-
 from adk import Agent, AgentClient
 from adk.tool.prebuilt import CalculatorToolkit
 import os
