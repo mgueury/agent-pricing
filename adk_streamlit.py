@@ -44,8 +44,7 @@ def setup():
     # Initialize the agent client
     client = AgentClient(
         auth_type="instance_principal",
-        profile="BoatOc1",
-        region="eu-frankfurt-01"
+        region="fra"
     )
 
     # Instantiate the local agent object (with the client, instructions, and tools to be registered)
