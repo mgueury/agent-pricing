@@ -23,7 +23,7 @@ class SearchToolkit(Toolkit):
         """
         ## need to set ("TAVILY_API_KEY")
         tavily_search = TavilySearchResults(max_results=3)
-        search_docs = tavily_search.invoke(question)
+        search_docs = tavily_search.invoke(topic)
         return search_docs
 
     '''
