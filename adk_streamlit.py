@@ -110,7 +110,7 @@ if prompt:
     try:
         # res = agent_pricing.chat(prompt)
         res = agent.run(prompt, max_steps=3)
-
+        print( res, flush=True )
         response_data = res.json()
         assistant_response = response_data.get("response", "No response received.")
     except Exception as e:
