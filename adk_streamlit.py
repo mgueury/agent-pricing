@@ -140,7 +140,7 @@ if prompt:
             control_output = control.output
             with st.chat_message("assistant"):
                 st.markdown("Controller: " + control_output)  
-            if control=='OK':
+            if control_output=='OK':
                 break  
             question = f"""
 ## User Question
