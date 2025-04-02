@@ -126,8 +126,7 @@ if prompt:
             agent_output = response.output
             with st.chat_message("assistant"):
                 st.markdown(f"VERSION{i}\n {agent_output}")               
-            st.session_state.chat_history.append("assistant", "#VERSION 1\n"+agent_output)
-            control = controller.run(assistant_response, max_steps=3)
+            control = controller.run(agent_output, max_steps=3)
             control.pretty_print()
             control_output = control.output
             with st.chat_message("assistant"):
