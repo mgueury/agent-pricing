@@ -64,6 +64,7 @@ def setup():
         tools=[SearchToolkit()]
     )
 
+    global controller
     controller = Agent(
         agent_endpoint_id=os.getenv("TF_VAR_agent_endpoint_ocid2"),
         client=client,
@@ -124,7 +125,7 @@ if prompt:
             response.pretty_print()
             agent_output = response.output
             with st.chat_message("assistant"):
-                st.markdown(f"VERSION{i}: {agent_output}")               
+                st.markdown(f"VERSION{i}\n {agent_output}")               
             st.session_state.chat_history.append("assistant", "#VERSION 1\n"+agent_output)
             control = controller.run(assistant_response, max_steps=3)
             control.pretty_print()
@@ -134,9 +135,9 @@ if prompt:
             if control=='OK':
                 break                                  
     except Exception as e:
-        assistant_response = f"Error calling agent: {e}"
+        agent_output = f"Error calling agent: {e}"
 
     # Display the assistant's response and update chat history
     st.session_state.chat_history.append(("assistant", agent_output))
     with st.chat_message("assistant"):
-        st.markdown("FINAL:" + agent_output)    
+        st.markdown("FINAL\n" + agent_output)    
