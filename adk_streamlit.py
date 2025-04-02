@@ -63,7 +63,7 @@ def setup():
 
         ## Details
         Response to the search question in 5 lines.
-        """
+        """,
         tools=[SearchToolkit()]
     )
 
