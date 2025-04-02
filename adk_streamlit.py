@@ -1,6 +1,5 @@
 from rich.console import Console
 from adk import Agent, AgentClient
-from adk.tool.prebuilt import CalculatorToolkit
 import os
 
 import os
@@ -36,6 +35,8 @@ class SearchToolkit(Toolkit):
 
 SETUP=False
 
+
+
 def setup():
 
     # Assuming the agent and agent endpoint resources were already provisioned
@@ -48,6 +49,7 @@ def setup():
     )
 
     # Instantiate the local agent object (with the client, instructions, and tools to be registered)
+    global agent
     agent = Agent(
         agent_endpoint_id=adk_demo_agent_endpoint_id,
         client=client,
