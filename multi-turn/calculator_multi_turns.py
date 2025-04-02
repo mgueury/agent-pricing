@@ -15,8 +15,7 @@ def main():
     try:
         # Initialize the agent client
         client = AgentClient(
-            auth_type="security_token",
-            profile="BoatOc1",
+            auth_type="instance_principal",
             region="eu-frankfurt-01"
         )
 
@@ -46,3 +45,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    
