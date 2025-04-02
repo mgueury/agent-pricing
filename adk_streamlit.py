@@ -124,7 +124,7 @@ if prompt:
         # res = agent_pricing.chat(prompt)
         question = prompt
         for i in range(1, 5): 
-            response = agent.run(prompt, max_steps=3)
+            response = agent.run(question, max_steps=3)
             response.pretty_print()
             agent_output = response.output
             with st.chat_message("assistant"):
