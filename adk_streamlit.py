@@ -73,7 +73,8 @@ def setup():
         ## Quality Check List
         1. Check if the company behind the product is given. 
         2. Check if the list of main feature of the product are given.
-        3. Check if there is a title
+        3. Check if the list of main features is given in bullet points.
+        4. Check if there is a title
         If all is there, accept the document. Just respond OK.
         """,
         tools=[SearchToolkit()]
