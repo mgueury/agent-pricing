@@ -109,9 +109,12 @@ if prompt:
     # Call the FastAPI langgraph agent at the /chat/ endpoint.
     try:
         # res = agent_pricing.chat(prompt)
-        res = agent.run(prompt, max_steps=3)
-        print( "-- res --", flush=True )
-        print( res, flush=True )
+        response = agent.run(prompt, max_steps=3)
+        print( "<pretty_print>", flush=True )
+        response.pretty_print()
+        print( "<response>", flush=True )
+        print( response, flush=True )
+        print( "</response>", flush=True )
         response_data = res.json()
         assistant_response = response_data.get("response", "No response received.")
     except Exception as e:
