@@ -35,7 +35,7 @@ class SearchToolkit(Toolkit):
     'content': 'LangGraph is an extension of LangChain enabling Multi-Agent conversation and cyclic chains. This video explains the basics of LangGraph and codesLangChain in...'}]      
     '''
 
-SETUP=True
+SETUP=False
 
 def setup():
 
@@ -66,8 +66,8 @@ Response to the search question in 5 lines.
     controller = Agent(
         agent_endpoint_id=os.getenv("TF_VAR_agent_endpoint_ocid2"),
         client=client,
-        instructions="""You are a quality control agent. Check the question sent by the user. It is provided as input.
-Check all the Quality checks below. If one of them fails, reject the response and ask to correct it.
+        instructions="""You are a quality control agent. Read the document sent as input by the user.      
+Check if that document passes all the Quality checks below. If one of them fails, reject the response and ask to correct it.
 ## Quality Check List
 1. Check if the company behind the product is given. 
 2. Check if the list of main feature of the product are given.
