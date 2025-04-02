@@ -29,7 +29,7 @@ class SearchToolkit(Toolkit):
 class NoneToolkit(Toolkit):
 
     @tool
-    def none(self) -> str:
+    def check_document_quality(self) -> str:
         """ This is a dummy. Do not use it.
         """
         return """You are a quality control agent. Read the document sent as input by the user.      
