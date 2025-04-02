@@ -129,11 +129,10 @@ if prompt:
             control = controller.run(assistant_response, max_steps=3)
             control.pretty_print()
             control_output = control.output
+            with st.chat_message("assistant"):
+                st.markdown("Controller: " + control_output)  
             if control=='OK':
-                break
-            else:
-                with st.chat_message("assistant"):
-                    st.markdown(control_output)                                    
+                break                                  
     except Exception as e:
         assistant_response = f"Error calling agent: {e}"
 
