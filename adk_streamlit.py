@@ -26,14 +26,21 @@ class SearchToolkit(Toolkit):
         search_docs = tavily_search.invoke(topic)
         return search_docs
 
-    '''
-    [{'url': 'https://www.datacamp.com/tutorial/langgraph-tutorial',
-    'content': 'LangGraph is a library within the LangChain ecosystem designed to tackle these challenges head-on. LangGraph provides a framework for defining, coordinating, and executing multiple LLM agents (or chains) in a structured manner.'},
-    {'url': 'https://langchain-ai.github.io/langgraph/',
-    'content': 'Overview LangGraph is a library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows. Compared to other LLM frameworks, it offers these core benefits: cycles, controllability, and persistence. LangGraph allows you to define flows that involve cycles, essential for most agentic architectures, differentiating it from DAG-based solutions. As a ...'},
-    {'url': 'https://www.youtube.com/watch?v=nmDFSVRnr4Q',
-    'content': 'LangGraph is an extension of LangChain enabling Multi-Agent conversation and cyclic chains. This video explains the basics of LangGraph and codesLangChain in...'}]      
-    '''
+class NoneToolkit(Toolkit):
+
+    @tool
+    def none(self) -> str:
+        """ This is a dummy. Do not use it.
+        """
+        return """You are a quality control agent. Read the document sent as input by the user.      
+Check if that document passes all the Quality checks below. If one of them fails, reject the response and ask to correct it.
+## Quality Check List
+1. Check if the company behind the product is given. 
+2. Check if the list of main feature of the product are given.
+3. Check if the list of main features is given in bullet points.
+4. Check if there is a title
+If all is OK, accept the document. Just respond OK.
+"""
 
 SETUP=True
 
@@ -74,7 +81,8 @@ Check if that document passes all the Quality checks below. If one of them fails
 3. Check if the list of main features is given in bullet points.
 4. Check if there is a title
 If all is OK, accept the document. Just respond OK.
-"""
+""",
+        tools=[NoneToolkit()]
     )
 
     # Set up the agent once (this configures the instructions and tools in the remote agent resource)
