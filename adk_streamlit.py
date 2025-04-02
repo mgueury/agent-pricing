@@ -75,7 +75,8 @@ def setup():
         2. Check if the list of main feature of the product are given.
         3. Check if there is a title
         If all is there, accept the document. Just respond OK.
-        """
+        """,
+        tools=[SearchToolkit()]
     )
 
     # Set up the agent once (this configures the instructions and tools in the remote agent resource)
