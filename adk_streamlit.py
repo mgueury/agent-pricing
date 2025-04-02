@@ -35,7 +35,7 @@ class SearchToolkit(Toolkit):
     'content': 'LangGraph is an extension of LangChain enabling Multi-Agent conversation and cyclic chains. This video explains the basics of LangGraph and codesLangChain in...'}]      
     '''
 
-SETUP=False
+SETUP=True
 
 def setup():
 
@@ -74,8 +74,7 @@ Check if that document passes all the Quality checks below. If one of them fails
 3. Check if the list of main features is given in bullet points.
 4. Check if there is a title
 If all is OK, accept the document. Just respond OK.
-""",
-        tools=[SearchToolkit()]
+"""
     )
 
     # Set up the agent once (this configures the instructions and tools in the remote agent resource)
