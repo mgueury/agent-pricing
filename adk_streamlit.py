@@ -35,7 +35,7 @@ class SearchToolkit(Toolkit):
     'content': 'LangGraph is an extension of LangChain enabling Multi-Agent conversation and cyclic chains. This video explains the basics of LangGraph and codesLangChain in...'}]      
     '''
 
-SETUP=False
+SETUP=True
 
 
 
@@ -122,6 +122,7 @@ if prompt:
     # Call the FastAPI langgraph agent at the /chat/ endpoint.
     try:
         # res = agent_pricing.chat(prompt)
+        question = prompt
         for i in range(1, 5): 
             response = agent.run(prompt, max_steps=3)
             response.pretty_print()
@@ -134,7 +135,17 @@ if prompt:
             with st.chat_message("assistant"):
                 st.markdown("Controller: " + control_output)  
             if control=='OK':
-                break                                  
+                break  
+            question = f"""
+            ## User Question
+            {prompt}
+
+            ## Previous response
+            {agent_output}
+
+            ## Correction requested
+            {control_output} 
+            """                                 
     except Exception as e:
         agent_output = f"Error calling agent: {e}"
 
