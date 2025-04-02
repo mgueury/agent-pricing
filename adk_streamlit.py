@@ -34,7 +34,7 @@ class SearchToolkit(Toolkit):
     {'url': 'https://www.youtube.com/watch?v=nmDFSVRnr4Q',
     'content': 'LangGraph is an extension of LangChain enabling Multi-Agent conversation and cyclic chains. This video explains the basics of LangGraph and codesLangChain in...'}]      
     '''
-    
+
 SETUP=True
 
 def setup():
@@ -51,14 +51,14 @@ def setup():
         agent_endpoint_id=os.getenv("TF_VAR_agent_endpoint_ocid"),
         client=client,
         instructions="""You are a helpful assistant that can perform search.
-        First use the search tool to get the response. Then create result document in this format:
-        
-        ### Title
-        Summary of the content
+First use the search tool to get the response. Then create result document in this format:
 
-        ### Details
-        Response to the search question in 5 lines.
-        """,
+### Title
+Summary of the content
+
+### Details
+Response to the search question in 5 lines.
+""",
         tools=[SearchToolkit()]
     )
 
@@ -66,15 +66,15 @@ def setup():
     controller = Agent(
         agent_endpoint_id=os.getenv("TF_VAR_agent_endpoint_ocid2"),
         client=client,
-        instructions="""You are a quality control agent. Check the document that has been provided as input.
-        If not, reject the response and ask to add it.
-        ## Quality Check List
-        1. Check if the company behind the product is given. 
-        2. Check if the list of main feature of the product are given.
-        3. Check if the list of main features is given in bullet points.
-        4. Check if there is a title
-        If all is there, accept the document. Just respond OK.
-        """,
+        instructions="""You are a quality control agent. Check the question sent by the user. It is provided as input.
+Check all the Quality checks below. If one of them fails, reject the response and ask to correct it.
+## Quality Check List
+1. Check if the company behind the product is given. 
+2. Check if the list of main feature of the product are given.
+3. Check if the list of main features is given in bullet points.
+4. Check if there is a title
+If all is OK, accept the document. Just respond OK.
+""",
         tools=[SearchToolkit()]
     )
 
@@ -136,15 +136,15 @@ if prompt:
             if control=='OK':
                 break  
             question = f"""
-            ## User Question
-            {prompt}
+## User Question
+{prompt}
 
-            ## Previous response
-            {agent_output}
+## Previous response
+{agent_output}
 
-            ## Correction requested
-            {control_output} 
-            """                                 
+## Correction requested
+{control_output} 
+"""                                 
     except Exception as e:
         agent_output = f"Error calling agent: {e}"
 
