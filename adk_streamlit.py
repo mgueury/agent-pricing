@@ -124,7 +124,7 @@ if prompt:
             response.pretty_print()
             agent_output = response.output
             with st.chat_message("assistant"):
-                st.markdown(agent_output)               
+                st.markdown(f"VERSION{i}: {agent_output}")               
             st.session_state.chat_history.append("assistant", "#VERSION 1\n"+agent_output)
             control = controller.run(assistant_response, max_steps=3)
             control.pretty_print()
@@ -139,4 +139,4 @@ if prompt:
     # Display the assistant's response and update chat history
     st.session_state.chat_history.append(("assistant", agent_output))
     with st.chat_message("assistant"):
-        st.markdown(agent_output)    
+        st.markdown("FINAL:" + agent_output)    
