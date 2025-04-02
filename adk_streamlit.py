@@ -115,7 +115,7 @@ if prompt:
         print( "<response>", flush=True )
         print( response, flush=True )
         print( "</response>", flush=True )
-        response_data = res.json()
+        response_data = response.json()
         assistant_response = response_data.get("response", "No response received.")
     except Exception as e:
         assistant_response = f"Error calling agent: {e}"
