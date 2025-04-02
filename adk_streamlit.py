@@ -55,8 +55,8 @@ def setup():
     agent = Agent(
         agent_endpoint_id=adk_demo_agent_endpoint_id,
         client=client,
-        instructions="""You are a helpful assistant that can perform search
-        And create result document in this format:
+        instructions="""You are a helpful assistant that can perform search.
+        First use the search tool to get the response. Then create result document in this format:
         
         ## Title
         Summary of the content
