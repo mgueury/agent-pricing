@@ -41,6 +41,9 @@ SETUP=False
 
 def setup():
 
+    # Assuming the agent and agent endpoint resources were already provisioned
+    adk_demo_agent_endpoint_id = os.getenv("TF_VAR_agent_endpoint_ocid")
+
     # Initialize the agent client
     client = AgentClient(
         auth_type="instance_principal",
@@ -50,7 +53,7 @@ def setup():
     # Instantiate the local agent object (with the client, instructions, and tools to be registered)
     global agent
     agent = Agent(
-        agent_endpoint_id=os.getenv("TF_VAR_agent_endpoint_ocid"),
+        agent_endpoint_id=adk_demo_agent_endpoint_id,
         client=client,
         instructions="""You are a helpful assistant that can perform search.
         First use the search tool to get the response. Then create result document in this format:
@@ -62,19 +65,6 @@ def setup():
         Response to the search question in 5 lines.
         """,
         tools=[SearchToolkit()]
-    )
-
-    controller = Agent(
-        agent_endpoint_id=os.getenv("TF_VAR_agent_endpoint_ocid2"),
-        client=client,
-        instructions="""You are a quality control agent. Check the document that has been provided as input.
-        If not, reject the response and ask to add it.
-        ## Quality Check List
-        1. Check if the company behind the product is given. 
-        2. Check if the list of main feature of the product are given.
-        3. Check if there is a title
-        If all is there, accept the document. Just respond OK.
-        """
     )
 
     # Set up the agent once (this configures the instructions and tools in the remote agent resource)
@@ -119,25 +109,20 @@ if prompt:
     # Call the FastAPI langgraph agent at the /chat/ endpoint.
     try:
         # res = agent_pricing.chat(prompt)
-        for i in range(1, 5): 
-            response = agent.run(prompt, max_steps=3)
-            response.pretty_print()
-            agent_output = response.output
-            with st.chat_message("assistant"):
-                st.markdown(agent_output)               
-            st.session_state.chat_history.append("assistant", "#VERSION 1\n"+agent_output)
-            control = controller.run(assistant_response, max_steps=3)
-            control.pretty_print()
-            control_output = control.output
-            if control=='OK':
-                break
-            else:
-                with st.chat_message("assistant"):
-                    st.markdown(control_output)                                    
+        response = agent.run(prompt, max_steps=3)
+        print( "<pretty_print>", flush=True )
+        response.pretty_print()
+        print( "<response>", flush=True )
+        print( response, flush=True )
+        print( "</response>", flush=True )
+        print( "<output>", flush=True )
+        print( response.output, flush=True )
+        print( "</output>", flush=True )
+        assistant_response = response.output
     except Exception as e:
         assistant_response = f"Error calling agent: {e}"
 
     # Display the assistant's response and update chat history
-    st.session_state.chat_history.append(("assistant", agent_output))
+    st.session_state.chat_history.append(("assistant", assistant_response))
     with st.chat_message("assistant"):
-        st.markdown(agent_output)    
+        st.markdown(assistant_response)    
